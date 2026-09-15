@@ -2,6 +2,8 @@
 
 Projeto da disciplina **Software Product: Analysis, Specification, Project & Implementation**.
 
+**Autor:** Gabriel Felix Pontes Pinheiro Rego.
+
 ## Objetivo
 
 Analisar os resultados do Corinthians em 2026 por meio de um dashboard no Power BI, apresentando de forma simples a distribuição de vitórias, empates e derrotas e o desempenho de gols no período estudado.
@@ -17,7 +19,7 @@ A AC1 cobre o período de **28/01 a 09/09/2026** e apresenta os seguintes indica
 - taxa de vitórias;
 - distribuição dos resultados e relação de partidas consideradas.
 
-Com todos os filtros abertos, o painel mostra 35 jogos, 12 vitórias, 12 empates, 11 derrotas, 37 gols marcados, 32 sofridos, saldo de +5 e taxa de vitórias de 34,3%.
+Sem restringir a competição ou o período, o painel mostra 35 jogos, 12 vitórias, 12 empates, 11 derrotas, 37 gols marcados, 32 sofridos, saldo de +5 e taxa de vitórias de 34,3%.
 
 ## Dados
 
@@ -35,10 +37,13 @@ O projeto editável está em `entregas/AC1/projeto-editavel/Corinthians_AC1_ENTR
 
 Os arquivos `Medidas.dax` e `Partidas.pq` registram, respectivamente, as medidas DAX e a consulta Power Query usadas na AC1.
 
-## Planejamento das próximas entregas
+## Planejamento das quatro entregas
 
-As etapas abaixo são planejamento futuro e ainda não fazem parte da implementação atual:
+Board do projeto: [Planejamento das ACs](https://github.com/users/gabriel-felix29/projects/2).
 
-- **AC2:** desempenho como mandante e visitante.
-- **AC3:** evolução mensal por competição.
-- **AC4:** posse de bola e resultados, consolidação e diagrama do modelo.
+A marcação indica se a análise de cada etapa já foi implementada. A AC1 está concluída; as próximas três etapas continuam planejadas.
+
+- [x] [AC1 — Analisar resultados e saldo de gols do Corinthians](https://github.com/gabriel-felix29/analise-corinthians-powerbi/issues/1)
+- [ ] [AC2 — Comparar desempenho como mandante e visitante](https://github.com/gabriel-felix29/analise-corinthians-powerbi/issues/2)
+- [ ] [AC3 — Analisar evolução mensal por competição](https://github.com/gabriel-felix29/analise-corinthians-powerbi/issues/3)
+- [ ] [AC4 — Analisar posse de bola e consolidar o projeto](https://github.com/gabriel-felix29/analise-corinthians-powerbi/issues/4)
