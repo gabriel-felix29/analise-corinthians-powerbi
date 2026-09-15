@@ -1,0 +1,126 @@
+Jogos =
+CALCULATE(COUNTROWS(Partidas), Partidas[status] = "Com resultado")
+
+Vitórias =
+CALCULATE([Jogos], Partidas[resultado] = "Vitória")
+
+Empates =
+CALCULATE([Jogos], Partidas[resultado] = "Empate")
+
+Derrotas =
+CALCULATE([Jogos], Partidas[resultado] = "Derrota")
+
+Gols Pró =
+CALCULATE(SUM(Partidas[gols_pro]), Partidas[status] = "Com resultado")
+
+Gols Contra =
+CALCULATE(SUM(Partidas[gols_contra]), Partidas[status] = "Com resultado")
+
+Saldo de Gols =
+[Gols Pró] - [Gols Contra]
+
+Taxa de Vitórias =
+DIVIDE([Vitórias], [Jogos])
+
+-- As três medidas auxiliares abaixo formam a conclusão dinâmica em linhas curtas.
+Leitura - frequência =
+VAR J = [Jogos]
+VAR V = COALESCE([Vitórias], 0)
+VAR E = COALESCE([Empates], 0)
+VAR D = COALESCE([Derrotas], 0)
+VAR Maior = MAX(V, MAX(E, D))
+VAR Sufixo = IF(Maior = 1, " partida", " partidas")
+VAR Lideres = IF(V = Maior, 1, 0) + IF(E = Maior, 1, 0) + IF(D = Maior, 1, 0)
+VAR Geral = J = 35 && V = 12 && E = 12 && D = 11
+RETURN
+    SWITCH(
+        TRUE(),
+        ISBLANK(J) || J = 0, "Não há partidas com resultado para o recorte selecionado.",
+        Geral, "Vitórias e empates tiveram a mesma frequência: 12 partidas cada, enquanto as derrotas somaram 11.",
+        Lideres = 3, "Vitórias, empates e derrotas tiveram a mesma frequência: " & FORMAT(Maior, "0") & Sufixo & " cada.",
+        V = Maior && E = Maior, "Vitórias e empates foram os resultados mais frequentes, com " & FORMAT(Maior, "0") & Sufixo & " cada.",
+        V = Maior && D = Maior, "Vitórias e derrotas foram os resultados mais frequentes, com " & FORMAT(Maior, "0") & Sufixo & " cada.",
+        E = Maior && D = Maior, "Empates e derrotas foram os resultados mais frequentes, com " & FORMAT(Maior, "0") & Sufixo & " cada.",
+        V = Maior, "Vitórias foram o resultado mais frequente, com " & FORMAT(V, "0") & Sufixo & ".",
+        E = Maior, "Empates foram o resultado mais frequente, com " & FORMAT(E, "0") & Sufixo & ".",
+        "Derrotas foram o resultado mais frequente, com " & FORMAT(D, "0") & Sufixo & "."
+    )
+
+Leitura - distribuição =
+VAR J = [Jogos]
+VAR V = COALESCE([Vitórias], 0)
+VAR E = COALESCE([Empates], 0)
+VAR D = COALESCE([Derrotas], 0)
+VAR TextoV = FORMAT(V, "0") & IF(V = 1, " vitória", " vitórias")
+VAR TextoE = FORMAT(E, "0") & IF(E = 1, " empate", " empates")
+VAR TextoD = FORMAT(D, "0") & IF(D = 1, " derrota", " derrotas")
+RETURN
+    IF(
+        ISBLANK(J) || J = 0,
+        BLANK(),
+        IF(
+            J = 35 && V = 12 && E = 12 && D = 11,
+            "A diferença de apenas um jogo entre os três resultados mostra uma distribuição equilibrada.",
+            "Distribuição no recorte: " & TextoV & ", " & TextoE & " e " & TextoD & "."
+        )
+    )
+
+Leitura - gols =
+VAR J = [Jogos]
+VAR GP = COALESCE([Gols Pró], 0)
+VAR GC = COALESCE([Gols Contra], 0)
+VAR Saldo = COALESCE([Saldo de Gols], 0)
+VAR Inicio =
+    SWITCH(
+        TRUE(),
+        Saldo > 0, "Nos gols, o Corinthians apresentou saldo positivo de " & FORMAT(Saldo, "+0;-0;0"),
+        Saldo < 0, "Nos gols, o Corinthians apresentou saldo negativo de " & FORMAT(Saldo, "+0;-0;0"),
+        "Nos gols, o Corinthians apresentou saldo zero"
+    )
+RETURN
+    IF(
+        ISBLANK(J) || J = 0,
+        BLANK(),
+        Inicio & ", com " & FORMAT(GP, "0") & IF(GP = 1, " marcado", " marcados") & " e " &
+        FORMAT(GC, "0") & IF(GC = 1, " sofrido", " sofridos") & "."
+    )
+
+Conclusao AC1 =
+VAR J = [Jogos]
+VAR V = COALESCE([Vitórias], 0)
+VAR E = COALESCE([Empates], 0)
+VAR D = COALESCE([Derrotas], 0)
+VAR GP = COALESCE([Gols Pró], 0)
+VAR GC = COALESCE([Gols Contra], 0)
+VAR Saldo = COALESCE([Saldo de Gols], 0)
+VAR Maior = MAX(V, MAX(E, D))
+VAR Lideres = IF(V = Maior, 1, 0) + IF(E = Maior, 1, 0) + IF(D = Maior, 1, 0)
+VAR Sufixo = IF(Maior = 1, " partida", " partidas")
+VAR Geral = J = 35 && V = 12 && E = 12 && D = 11 && GP = 37 && GC = 32
+VAR TextoResultados =
+    SWITCH(
+        TRUE(),
+        Geral, "Vitórias e empates tiveram a mesma frequência: 12 partidas cada, enquanto as derrotas somaram 11.",
+        Lideres = 3, "Vitórias, empates e derrotas tiveram a mesma frequência: " & FORMAT(Maior, "0") & Sufixo & " cada.",
+        V = Maior && E = Maior, "Vitórias e empates foram os resultados mais frequentes, com " & FORMAT(Maior, "0") & Sufixo & " cada.",
+        V = Maior && D = Maior, "Vitórias e derrotas foram os resultados mais frequentes, com " & FORMAT(Maior, "0") & Sufixo & " cada.",
+        E = Maior && D = Maior, "Empates e derrotas foram os resultados mais frequentes, com " & FORMAT(Maior, "0") & Sufixo & " cada.",
+        V = Maior, "Vitórias foram o resultado mais frequente, com " & FORMAT(V, "0") & Sufixo & ".",
+        E = Maior, "Empates foram o resultado mais frequente, com " & FORMAT(E, "0") & Sufixo & ".",
+        "Derrotas foram o resultado mais frequente, com " & FORMAT(D, "0") & Sufixo & "."
+    )
+VAR TextoGols =
+    SWITCH(
+        TRUE(),
+        Saldo > 0, "Nos gols, o Corinthians apresentou saldo positivo de " & FORMAT(Saldo, "+0;-0;0"),
+        Saldo < 0, "Nos gols, o Corinthians apresentou saldo negativo de " & FORMAT(Saldo, "+0;-0;0"),
+        "Nos gols, o Corinthians apresentou saldo zero"
+    )
+    & ", com " & FORMAT(GP, "0") & IF(GP = 1, " marcado", " marcados")
+    & " e " & FORMAT(GC, "0") & IF(GC = 1, " sofrido", " sofridos") & "."
+RETURN
+    IF(
+        ISBLANK(J) || J = 0,
+        "Não há partidas com resultado para o recorte selecionado.",
+        TextoResultados & UNICHAR(10) & TextoGols
+    )

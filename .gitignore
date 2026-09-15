@@ -1,0 +1,30 @@
+# Arquivos locais do Power BI
+**/.pbi/
+*.pbix.autosave
+*.lock
+*.tmp
+*.temp
+~$*
+
+# Backups e revisões locais
+**/backup/
+**/backups/
+*backup*
+*revisao*
+*revisão*
+*revision*
+
+# Configurações locais de editores e sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Caches de ferramentas
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Relatórios temporários de validação
+validacao_schemas.json

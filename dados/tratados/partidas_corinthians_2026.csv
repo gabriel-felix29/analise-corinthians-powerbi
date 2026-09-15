@@ -1,0 +1,49 @@
+﻿data;hora;competicao;fase;dia_semana;mando;resultado;gols_pro;gols_contra;adversario;posse_bola;publico;capitao;formacao;formacao_adversario;arbitro;relatorio;observacoes;status;id_partida
+2026-01-28;20:00;Série A;Matchweek 1;Wed;Mandante;Derrota;1;2;Bahia;0.59;13788;Gustavo Henrique;3-4-1-2;4-3-3;Anderson Daronco;Match Report;;Com resultado;2026-01-28|Série A|Bahia
+2026-02-12;20:00;Série A;Matchweek 3;Thu;Mandante;Vitória;2;0;RB Bragantino;0.6;26985;Rodrigo Garro;4-4-2◆;4-2-3-1;Felipe Fernandes de Lima;Match Report;;Com resultado;2026-02-12|Série A|RB Bragantino
+2026-02-19;19:30;Série A;Matchweek 2;Thu;Visitante;Vitória;1;0;Athletico–PR;0.44;16804;Rodrigo Garro;4-2-3-1;4-2-3-1;Rodrigo José Pereira de Lima;Match Report;;Com resultado;2026-02-19|Série A|Athletico–PR
+2026-02-25;20:00;Série A;Matchweek 4;Wed;Visitante;Empate;1;1;Cruzeiro;0.52;20267;Hugo Souza;4-2-3-1;4-2-3-1;Davi de Oliveira Lacerda;Match Report;;Com resultado;2026-02-25|Série A|Cruzeiro
+2026-03-11;21:30;Série A;Matchweek 5;Wed;Mandante;Derrota;0;2;Coritiba;0.73;35125;Gustavo Henrique;4-1-3-2;4-2-3-1;Paulo Zanovelli;Match Report;;Com resultado;2026-03-11|Série A|Coritiba
+2026-03-15;16:00;Série A;Matchweek 6;Sun;Visitante;Empate;1;1;Santos;0.56;15008;Gustavo Henrique;4-3-2-1;3-1-4-2;Flavio Rodrigues de Souza;Match Report;;Com resultado;2026-03-15|Série A|Santos
+2026-03-19;21:30;Série A;Matchweek 7;Thu;Visitante;Empate;0;0;Chapecoense;0.64;18031;Rodrigo Garro;4-2-3-1;4-3-1-2;Wilton Sampaio;Match Report;;Com resultado;2026-03-19|Série A|Chapecoense
+2026-03-22;20:30;Série A;Matchweek 8;Sun;Mandante;Empate;1;1;Flamengo;0.55;41896;Gustavo Henrique;4-3-1-2;4-2-3-1;Rodrigo José Pereira de Lima;Match Report;;Com resultado;2026-03-22|Série A|Flamengo
+2026-04-01;21:30;Série A;Matchweek 9;Wed;Visitante;Derrota;1;3;Fluminense;0.4;24701;Rodrigo Garro;4-2-3-1;4-2-3-1;Davi de Oliveira Lacerda;Match Report;;Com resultado;2026-04-01|Série A|Fluminense
+2026-04-05;19:30;Série A;Matchweek 10;Sun;Mandante;Derrota;0;1;Internacional;0.65;32437;Gustavo Henrique;4-4-2;4-4-2;Felipe Fernandes de Lima;Match Report;;Com resultado;2026-04-05|Série A|Internacional
+2026-04-09;21:00;Libertadores;Group stage;Thu;Visitante;Vitória;2;0;ar Platense;0.44;;Rodrigo Garro;4-2-3-1;4-4-2;Piero Maza;Match Report;;Com resultado;2026-04-09|Libertadores|ar Platense
+2026-04-12;18:30;Série A;Matchweek 11;Sun;Mandante;Empate;0;0;Palmeiras;0.32;46466;Rodrigo Garro;4-4-2;4-2-3-1;Flavio Rodrigues de Souza;Match Report;;Com resultado;2026-04-12|Série A|Palmeiras
+2026-04-15;21:30;Libertadores;Group stage;Wed;Mandante;Vitória;2;0;co Santa Fe;0.66;;Rodrigo Garro;4-4-1-1;4-3-3;Juan Gabriel Benítez;Match Report;;Com resultado;2026-04-15|Libertadores|co Santa Fe
+2026-04-18;20:00;Série A;Matchweek 12;Sat;Visitante;Empate;0;0;Vitória;0.46;21991;Rodrigo Garro;4-2-3-1;4-3-3;Alex Gomes Stefano;Match Report;;Com resultado;2026-04-18|Série A|Vitória
+2026-04-26;16:00;Série A;Matchweek 13;Sun;Mandante;Vitória;1;0;Vasco da Gama;0.4;42352;Rodrigo Garro;4-2-3-1;4-1-4-1;Davi de Oliveira Lacerda;Match Report;;Com resultado;2026-04-26|Série A|Vasco da Gama
+2026-04-30;21:00;Libertadores;Group stage;Thu;Mandante;Vitória;2;0;uy Peñarol;0.78;;Rodrigo Garro;4-2-3-1;4-3-3;Cristián Garay;Match Report;;Com resultado;2026-04-30|Libertadores|uy Peñarol
+2026-05-03;20:30;Série A;Matchweek 14;Sun;Visitante;Derrota;1;2;Mirassol;0.62;9943;Rodrigo Garro;4-2-3-1;4-2-3-1;Matheus Candançan;Match Report;;Com resultado;2026-05-03|Série A|Mirassol
+2026-05-06;19:30 (21:30);Libertadores;Group stage;Wed;Visitante;Empate;1;1;co Santa Fe;0.59;;Rodrigo Garro;4-2-3-1;4-2-3-1;Kevin Ortega;Match Report;;Com resultado;2026-05-06|Libertadores|co Santa Fe
+2026-05-10;18:30;Série A;Matchweek 15;Sun;Mandante;Vitória;3;2;São Paulo;0.5;37366;Rodrigo Garro;4-2-3-1;4-2-3-1;Anderson Daronco;Match Report;;Com resultado;2026-05-10|Série A|São Paulo
+2026-05-17;16:00;Série A;Matchweek 16;Sun;Visitante;Derrota;1;3;Botafogo–RJ;0.65;17556;Rodrigo Garro;4-2-3-1;4-2-3-1;Felipe Fernandes de Lima;Match Report;;Com resultado;2026-05-17|Série A|Botafogo–RJ
+2026-05-21;21:30;Libertadores;Group stage;Thu;Visitante;Empate;1;1;uy Peñarol;0.65;;Gustavo Henrique;4-2-3-1;5-4-1;Piero Maza;Match Report;;Com resultado;2026-05-21|Libertadores|uy Peñarol
+2026-05-24;18:30;Série A;Matchweek 17;Sun;Mandante;Vitória;1;0;Atlético Mineiro;0.58;42508;Rodrigo Garro;4-2-3-1;4-1-4-1;Rafael Klein;Match Report;;Com resultado;2026-05-24|Série A|Atlético Mineiro
+2026-05-27;21:30;Libertadores;Group stage;Wed;Mandante;Derrota;0;2;ar Platense;0.77;;Rodrigo Garro;4-3-1-2;4-1-4-1;Alexis Herrera;Match Report;;Com resultado;2026-05-27|Libertadores|ar Platense
+2026-05-30;17:30;Série A;Matchweek 18;Sat;Visitante;Vitória;3;1;Grêmio;0.59;42089;Rodrigo Garro;4-2-3-1;4-2-3-1;Lucas Paulo Torezin;Match Report;;Com resultado;2026-05-30|Série A|Grêmio
+2026-07-23;19:30;Série A;Matchweek 19;Thu;Mandante;Vitória;3;0;Remo;0.56;43623;Gustavo Henrique;4-2-3-1;4-4-2;Lucas Casagrande;Match Report;;Com resultado;2026-07-23|Série A|Remo
+2026-07-26;16:00;Série A;Matchweek 20;Sun;Visitante;Empate;1;1;Bahia;0.4;44255;Rodrigo Garro;4-4-2;3-1-4-2;Ramon Abatti;Match Report;;Com resultado;2026-07-26|Série A|Bahia
+2026-07-30;19:30;Série A;Matchweek 21;Thu;Mandante;Empate;0;0;Athletico–PR;0.52;38963;Hugo Souza;4-2-3-1;3-4-3;Paulo Zanovelli;Match Report;;Com resultado;2026-07-30|Série A|Athletico–PR
+2026-08-09;18:30;Série A;Matchweek 22;Sun;Visitante;Vitória;2;0;RB Bragantino;0.52;6808;Rodrigo Garro;4-2-3-1;4-2-3-1;Raphael Claus;Match Report;;Com resultado;2026-08-09|Série A|RB Bragantino
+2026-08-13;21:30;Libertadores;Round of 16;Thu;Visitante;Empate;0;0;ar Rosario Central;0.43;;Rodrigo Garro;4-2-3-1;4-2-3-1;Andrés Matonte;Match Report;Leg 1 of 2;Com resultado;2026-08-13|Libertadores|ar Rosario Central
+2026-08-16;19:30;Série A;Matchweek 23;Sun;Mandante;Derrota;1;2;Cruzeiro;0.53;37894;Rodrigo Garro;4-2-3-1;4-4-2;Davi de Oliveira Lacerda;Match Report;;Com resultado;2026-08-16|Série A|Cruzeiro
+2026-08-20;21:30;Libertadores;Round of 16;Thu;Mandante;Vitória;1;0;ar Rosario Central;0.44;;Rodrigo Garro;4-2-3-1;4-2-3-1;Alexis Herrera;Match Report;"Leg 2 of 2; Corinthians won";Com resultado;2026-08-20|Libertadores|ar Rosario Central
+2026-08-23;19:30;Série A;Matchweek 24;Sun;Visitante;Derrota;1;2;Coritiba;0.65;32743;Gustavo Henrique;4-2-3-1;4-2-3-1;Anderson Daronco;Match Report;;Com resultado;2026-08-23|Série A|Coritiba
+2026-08-30;16:00;Série A;Matchweek 25;Sun;Mandante;Derrota;0;1;Santos;0.62;47099;Rodrigo Garro;4-2-3-1;4-2-3-1;Wilton Sampaio;Match Report;;Com resultado;2026-08-30|Série A|Santos
+2026-09-06;19:30;Série A;Matchweek 26;Sun;Mandante;Derrota;1;2;Chapecoense;0.62;44588;Rodrigo Garro;4-2-3-1;4-2-3-1;Wagner do Nascimento Magalhães;Match Report;;Com resultado;2026-09-06|Série A|Chapecoense
+2026-09-09;21:30;Libertadores;Quarter-finals;Wed;Visitante;Empate;1;1;ar Estudiantes–LP;0.49;;Rodrigo Garro;4-2-3-1;4-4-2;Esteban Ostojich;Match Report;Leg 1 of 2;Com resultado;2026-09-09|Libertadores|ar Estudiantes–LP
+2026-09-13;17:30;Série A;Matchweek 27;Sun;Visitante;;;;Flamengo;;;;;;;Head-to-Head;;Sem resultado;2026-09-13|Série A|Flamengo
+2026-09-16;21:30;Libertadores;Quarter-finals;Wed;Mandante;;;;ar Estudiantes–LP;;;;;;;Head-to-Head;"Leg 2 of 2; Estudiantes–LP 1:1 Corinthians";Sem resultado;2026-09-16|Libertadores|ar Estudiantes–LP
+2026-09-20;16:00;Série A;Matchweek 28;Sun;Mandante;;;;Fluminense;;;;;;;Head-to-Head;;Sem resultado;2026-09-20|Série A|Fluminense
+2026-10-07;19:30;Série A;Matchweek 29;Wed;Visitante;;;;Internacional;;;;;;;Head-to-Head;;Sem resultado;2026-10-07|Série A|Internacional
+2026-10-11;17:30;Série A;Matchweek 30;Sun;Visitante;;;;Palmeiras;;;;;;;Head-to-Head;;Sem resultado;2026-10-11|Série A|Palmeiras
+2026-10-17;;Série A;Matchweek 31;Sat;Mandante;;;;Vitória;;;;;;;Head-to-Head;;Sem resultado;2026-10-17|Série A|Vitória
+2026-10-24;;Série A;Matchweek 32;Sat;Visitante;;;;Vasco da Gama;;;;;;;Head-to-Head;;Sem resultado;2026-10-24|Série A|Vasco da Gama
+2026-10-28;;Série A;Matchweek 33;Wed;Mandante;;;;Mirassol;;;;;;;Head-to-Head;;Sem resultado;2026-10-28|Série A|Mirassol
+2026-11-04;;Série A;Matchweek 34;Wed;Visitante;;;;São Paulo;;;;;;;Head-to-Head;;Sem resultado;2026-11-04|Série A|São Paulo
+2026-11-18;;Série A;Matchweek 35;Wed;Mandante;;;;Botafogo–RJ;;;;;;;Head-to-Head;;Sem resultado;2026-11-18|Série A|Botafogo–RJ
+2026-11-21;;Série A;Matchweek 36;Sat;Visitante;;;;Atlético Mineiro;;;;;;;Head-to-Head;;Sem resultado;2026-11-21|Série A|Atlético Mineiro
+2026-11-28;;Série A;Matchweek 37;Sat;Mandante;;;;Grêmio;;;;;;;Head-to-Head;;Sem resultado;2026-11-28|Série A|Grêmio
+2026-12-02;;Série A;Matchweek 38;Wed;Visitante;;;;Remo;;;;;;;Head-to-Head;;Sem resultado;2026-12-02|Série A|Remo

@@ -1,0 +1,342 @@
+table Partidas
+	lineageTag: 63f27609-c7f1-4337-9608-d53d91bb874a
+
+	/// Quantidade de partidas com resultado no contexto dos filtros.
+	measure Jogos = CALCULATE(COUNTROWS(Partidas), Partidas[status] = "Com resultado")
+		formatString: 0
+		displayFolder: AC1
+		lineageTag: 18b33d2c-2420-4348-a943-391bb265d281
+
+	/// Partidas com resultado Vitória.
+	measure Vitórias = CALCULATE([Jogos], Partidas[resultado] = "Vitória")
+		formatString: 0
+		displayFolder: AC1
+		lineageTag: 026b3124-50f4-400b-98cb-2c7c3736b3e8
+
+	/// Partidas com resultado Empate.
+	measure Empates = CALCULATE([Jogos], Partidas[resultado] = "Empate")
+		formatString: 0
+		displayFolder: AC1
+		lineageTag: 304791a7-54f8-45e1-8f7b-4a79a5ff8a17
+
+	/// Partidas com resultado Derrota.
+	measure Derrotas = CALCULATE([Jogos], Partidas[resultado] = "Derrota")
+		formatString: 0
+		displayFolder: AC1
+		lineageTag: e01de356-34b9-4de0-969c-184f100fa6ef
+
+	/// Gols marcados pelo Corinthians em partidas com resultado.
+	measure 'Gols Pró' = CALCULATE(SUM(Partidas[gols_pro]), Partidas[status] = "Com resultado")
+		formatString: 0
+		displayFolder: AC1
+		lineageTag: 5eea4cec-94eb-46d6-94bd-de84227f434d
+
+	/// Gols sofridos pelo Corinthians em partidas com resultado.
+	measure 'Gols Contra' = CALCULATE(SUM(Partidas[gols_contra]), Partidas[status] = "Com resultado")
+		formatString: 0
+		displayFolder: AC1
+		lineageTag: 0c535b2e-011d-4820-a80e-62d1f4dd857e
+
+	/// Diferença entre gols marcados e sofridos.
+	measure 'Saldo de Gols' = [Gols Pró] - [Gols Contra]
+		formatString: 0
+		displayFolder: AC1
+		lineageTag: 0489a295-e917-404e-87c8-da4047324106
+
+	/// Proporção de jogos vencidos; não representa aproveitamento de pontos.
+	measure 'Taxa de Vitórias' = DIVIDE([Vitórias], [Jogos])
+		formatString: 0.0%
+		displayFolder: AC1
+		lineageTag: aaf66f3c-bb59-41e9-9962-fb103e0650aa
+
+	/// Primeira linha da leitura dinamica dos resultados.
+	measure 'Leitura - frequência' =
+			VAR J = [Jogos]
+			VAR V = COALESCE([Vitórias], 0)
+			VAR E = COALESCE([Empates], 0)
+			VAR D = COALESCE([Derrotas], 0)
+			VAR Maior = MAX(V, MAX(E, D))
+			VAR Sufixo = IF(Maior = 1, " partida", " partidas")
+			VAR Lideres = IF(V = Maior, 1, 0) + IF(E = Maior, 1, 0) + IF(D = Maior, 1, 0)
+			VAR Geral = J = 35 && V = 12 && E = 12 && D = 11
+			RETURN
+				SWITCH(
+					TRUE(),
+					ISBLANK(J) || J = 0, "Não há partidas com resultado para o recorte selecionado.",
+					Geral, "Vitórias e empates tiveram a mesma frequência: 12 partidas cada, enquanto as derrotas somaram 11.",
+					Lideres = 3, "Vitórias, empates e derrotas tiveram a mesma frequência: " & FORMAT(Maior, "0") & Sufixo & " cada.",
+					V = Maior && E = Maior, "Vitórias e empates foram os resultados mais frequentes, com " & FORMAT(Maior, "0") & Sufixo & " cada.",
+					V = Maior && D = Maior, "Vitórias e derrotas foram os resultados mais frequentes, com " & FORMAT(Maior, "0") & Sufixo & " cada.",
+					E = Maior && D = Maior, "Empates e derrotas foram os resultados mais frequentes, com " & FORMAT(Maior, "0") & Sufixo & " cada.",
+					V = Maior, "Vitórias foram o resultado mais frequente, com " & FORMAT(V, "0") & Sufixo & ".",
+					E = Maior, "Empates foram o resultado mais frequente, com " & FORMAT(E, "0") & Sufixo & ".",
+					"Derrotas foram o resultado mais frequente, com " & FORMAT(D, "0") & Sufixo & "."
+				)
+		displayFolder: AC1
+		lineageTag: c31b8a4d-ceca-4beb-89d7-3d35e13abd0b
+
+	/// Segunda linha da leitura dinamica dos resultados.
+	measure 'Leitura - distribuição' =
+			VAR J = [Jogos]
+			VAR V = COALESCE([Vitórias], 0)
+			VAR E = COALESCE([Empates], 0)
+			VAR D = COALESCE([Derrotas], 0)
+			VAR TextoV = FORMAT(V, "0") & IF(V = 1, " vitória", " vitórias")
+			VAR TextoE = FORMAT(E, "0") & IF(E = 1, " empate", " empates")
+			VAR TextoD = FORMAT(D, "0") & IF(D = 1, " derrota", " derrotas")
+			RETURN
+				IF(
+					ISBLANK(J) || J = 0,
+					BLANK(),
+					IF(
+						J = 35 && V = 12 && E = 12 && D = 11,
+						"A diferença de apenas um jogo entre os três resultados mostra uma distribuição equilibrada.",
+						"Distribuição no recorte: " & TextoV & ", " & TextoE & " e " & TextoD & "."
+					)
+				)
+		displayFolder: AC1
+		lineageTag: 74dfb4ae-43b4-44bd-898b-568de09c3fc2
+
+	/// Terceira linha da leitura dinamica, dedicada aos gols.
+	measure 'Leitura - gols' =
+			VAR J = [Jogos]
+			VAR GP = COALESCE([Gols Pró], 0)
+			VAR GC = COALESCE([Gols Contra], 0)
+			VAR Saldo = COALESCE([Saldo de Gols], 0)
+			VAR Inicio =
+				SWITCH(
+					TRUE(),
+					Saldo > 0, "Nos gols, o Corinthians apresentou saldo positivo de " & FORMAT(Saldo, "+0;-0;0"),
+					Saldo < 0, "Nos gols, o Corinthians apresentou saldo negativo de " & FORMAT(Saldo, "+0;-0;0"),
+					"Nos gols, o Corinthians apresentou saldo zero"
+				)
+			RETURN
+				IF(
+					ISBLANK(J) || J = 0,
+					BLANK(),
+					Inicio & ", com " & FORMAT(GP, "0") & IF(GP = 1, " marcado", " marcados") & " e " & FORMAT(GC, "0") & IF(GC = 1, " sofrido", " sofridos") & "."
+				)
+		displayFolder: AC1
+		lineageTag: 2054dd73-90d1-4493-935d-1e5ba3b24676
+
+	/// Conclusão dinâmica da AC1 para resultados e gols.
+	measure 'Conclusao AC1' =
+			VAR J = [Jogos]
+			VAR V = COALESCE([Vitórias], 0)
+			VAR E = COALESCE([Empates], 0)
+			VAR D = COALESCE([Derrotas], 0)
+			VAR GP = COALESCE([Gols Pró], 0)
+			VAR GC = COALESCE([Gols Contra], 0)
+			VAR Saldo = COALESCE([Saldo de Gols], 0)
+			VAR Maior = MAX(V, MAX(E, D))
+			VAR Lideres = IF(V = Maior, 1, 0) + IF(E = Maior, 1, 0) + IF(D = Maior, 1, 0)
+			VAR Sufixo = IF(Maior = 1, " partida", " partidas")
+			VAR Geral = J = 35 && V = 12 && E = 12 && D = 11 && GP = 37 && GC = 32
+			VAR TextoResultados =
+				SWITCH(
+					TRUE(),
+					Geral, "Vitórias e empates tiveram a mesma frequência: 12 partidas cada, enquanto as derrotas somaram 11.",
+					Lideres = 3, "Vitórias, empates e derrotas tiveram a mesma frequência: " & FORMAT(Maior, "0") & Sufixo & " cada.",
+					V = Maior && E = Maior, "Vitórias e empates foram os resultados mais frequentes, com " & FORMAT(Maior, "0") & Sufixo & " cada.",
+					V = Maior && D = Maior, "Vitórias e derrotas foram os resultados mais frequentes, com " & FORMAT(Maior, "0") & Sufixo & " cada.",
+					E = Maior && D = Maior, "Empates e derrotas foram os resultados mais frequentes, com " & FORMAT(Maior, "0") & Sufixo & " cada.",
+					V = Maior, "Vitórias foram o resultado mais frequente, com " & FORMAT(V, "0") & Sufixo & ".",
+					E = Maior, "Empates foram o resultado mais frequente, com " & FORMAT(E, "0") & Sufixo & ".",
+					"Derrotas foram o resultado mais frequente, com " & FORMAT(D, "0") & Sufixo & "."
+				)
+			VAR TextoGols =
+				SWITCH(
+					TRUE(),
+					Saldo > 0, "Nos gols, o Corinthians apresentou saldo positivo de " & FORMAT(Saldo, "+0;-0;0"),
+					Saldo < 0, "Nos gols, o Corinthians apresentou saldo negativo de " & FORMAT(Saldo, "+0;-0;0"),
+					"Nos gols, o Corinthians apresentou saldo zero"
+				)
+				& ", com " & FORMAT(GP, "0") & IF(GP = 1, " marcado", " marcados")
+				& " e " & FORMAT(GC, "0") & IF(GC = 1, " sofrido", " sofridos") & "."
+			RETURN
+				IF(
+					ISBLANK(J) || J = 0,
+					"Não há partidas com resultado para o recorte selecionado.",
+					TextoResultados & UNICHAR(10) & TextoGols
+				)
+		displayFolder: AC1
+		lineageTag: 5653d532-c414-4758-ba01-c082476878b0
+
+	column data
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: d0ca474e-be3d-4a4a-9c4c-8ba80d68b910
+		summarizeBy: none
+		sourceColumn: data
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hora
+		dataType: string
+		lineageTag: df4ef98a-4387-4dc6-af31-e7bcb4d5d1b1
+		summarizeBy: none
+		sourceColumn: hora
+
+		annotation SummarizationSetBy = Automatic
+
+	column competicao
+		dataType: string
+		lineageTag: c27b2d82-60d5-46d4-8bf6-d5346cbe3e94
+		summarizeBy: none
+		sourceColumn: competicao
+
+		annotation SummarizationSetBy = Automatic
+
+	column fase
+		dataType: string
+		lineageTag: 83e0a54e-acad-4c22-95bb-8581afa3e801
+		summarizeBy: none
+		sourceColumn: fase
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia_semana
+		dataType: string
+		lineageTag: 1334470e-2bac-491e-aec3-bb90c9eb6782
+		summarizeBy: none
+		sourceColumn: dia_semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column mando
+		dataType: string
+		lineageTag: 3d40ed97-7423-4e45-b2c4-9a8e57145395
+		summarizeBy: none
+		sourceColumn: mando
+
+		annotation SummarizationSetBy = Automatic
+
+	column resultado
+		dataType: string
+		lineageTag: 0e490ee9-7e80-4790-83f7-0670c22d02ed
+		summarizeBy: none
+		sourceColumn: resultado
+
+		annotation SummarizationSetBy = Automatic
+
+	column gols_pro
+		dataType: int64
+		formatString: 0
+		lineageTag: 5482d856-038d-47cd-bf15-f3d12a48d877
+		summarizeBy: none
+		sourceColumn: gols_pro
+
+		annotation SummarizationSetBy = Automatic
+
+	column gols_contra
+		dataType: int64
+		formatString: 0
+		lineageTag: 5fcb3966-193f-4717-97b5-e31b341f82b4
+		summarizeBy: none
+		sourceColumn: gols_contra
+
+		annotation SummarizationSetBy = Automatic
+
+	column adversario
+		dataType: string
+		lineageTag: 93351dea-be6f-46b9-829c-ed64651a60c6
+		summarizeBy: none
+		sourceColumn: adversario
+
+		annotation SummarizationSetBy = Automatic
+
+	column posse_bola
+		dataType: double
+		formatString: 0%
+		lineageTag: 9395f0aa-d91b-478f-8612-f986cd746b9e
+		summarizeBy: none
+		sourceColumn: posse_bola
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Não utilizado na AC1: ausente nas nove partidas da Libertadores com resultado.
+	column publico
+		dataType: int64
+		isHidden
+		lineageTag: 8c9cfd9f-f061-4501-bde5-939f5fd5778b
+		summarizeBy: none
+		sourceColumn: publico
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column capitao
+		dataType: string
+		lineageTag: 9868200e-cd45-45a5-b2db-d83a79d2706b
+		summarizeBy: none
+		sourceColumn: capitao
+
+		annotation SummarizationSetBy = Automatic
+
+	column formacao
+		dataType: string
+		lineageTag: 7fd1aca0-8242-4518-b22c-08875c5cb5fe
+		summarizeBy: none
+		sourceColumn: formacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column formacao_adversario
+		dataType: string
+		lineageTag: 641e0ec0-ea8b-43a6-8ea9-6f0c9426d78a
+		summarizeBy: none
+		sourceColumn: formacao_adversario
+
+		annotation SummarizationSetBy = Automatic
+
+	column arbitro
+		dataType: string
+		lineageTag: 6b02ab96-09e5-4d29-b7c7-d688a3229542
+		summarizeBy: none
+		sourceColumn: arbitro
+
+		annotation SummarizationSetBy = Automatic
+
+	column relatorio
+		dataType: string
+		lineageTag: acb2cca9-8acb-44ed-a358-8007228bbad8
+		summarizeBy: none
+		sourceColumn: relatorio
+
+		annotation SummarizationSetBy = Automatic
+
+	column observacoes
+		dataType: string
+		lineageTag: 0cfe92d9-96a6-4799-8528-76f9a861632b
+		summarizeBy: none
+		sourceColumn: observacoes
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 2d68af40-22f7-4831-88d2-9af922bef1fc
+		summarizeBy: none
+		sourceColumn: status
+
+	column id_partida
+		dataType: string
+		lineageTag: 2c196902-36ce-47da-aa79-d9901e7e3552
+		summarizeBy: none
+		sourceColumn: id_partida
+
+	partition partidas_corinthians2026 = m
+		mode: import
+		source =
+				let
+				    CaminhoCSV = "C:\Users\Gabriel GhT\Documents\Projeto-faculdade-analise-de-dados\AC1\partidas_corinthians_2026.csv",
+				    Fonte = Csv.Document(File.Contents(CaminhoCSV), [Delimiter=";", Columns=20, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Cabecalhos = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    Ausentes = Table.ReplaceValue(Cabecalhos, "", null, Replacer.ReplaceValue, Table.ColumnNames(Cabecalhos)),
+				    Tipos = Table.TransformColumnTypes(Ausentes, {{"data", type date}, {"hora", type text}, {"competicao", type text}, {"fase", type text}, {"dia_semana", type text}, {"mando", type text}, {"resultado", type text}, {"gols_pro", Int64.Type}, {"gols_contra", Int64.Type}, {"adversario", type text}, {"posse_bola", type number}, {"publico", Int64.Type}, {"capitao", type text}, {"formacao", type text}, {"formacao_adversario", type text}, {"arbitro", type text}, {"relatorio", type text}, {"observacoes", type text}, {"status", type text}, {"id_partida", type text}}, "en-US")
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table
+

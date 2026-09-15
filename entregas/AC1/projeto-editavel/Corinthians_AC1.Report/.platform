@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Corinthians_AC1"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c4c74552-915c-4494-bef8-3ab376ab54b1"
+  }
+}
