@@ -21,6 +21,12 @@ A AC1 cobre o período de **28/01 a 09/09/2026** e apresenta os seguintes indica
 
 Sem restringir a competição ou o período, o painel mostra 35 jogos, 12 vitórias, 12 empates, 11 derrotas, 37 gols marcados, 32 sofridos, saldo de +5 e taxa de vitórias de 34,3%.
 
+## Vídeo da AC1
+
+[Assistir à apresentação da AC1 no YouTube](https://youtu.be/8ghU2RmhhU8)
+
+O vídeo apresenta o planejamento no board, a origem dos dados e a demonstração do dashboard, incluindo os indicadores e filtros por competição e período.
+
 ## Dados
 
 Fonte: [FBref — Corinthians 2026](https://fbref.com/en/squads/bf4acd28/2026/all_comps/Corinthians-Stats-All-Competitions).
