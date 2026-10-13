@@ -29,6 +29,8 @@ O vídeo apresenta o planejamento no board, a origem dos dados e a demonstraçã
 
 ## AC2 — Mandante x visitante
 
+[Vídeo de apresentação da AC2](https://youtu.be/ygtt8AJBoXQ)
+
 A AC2 compara o desempenho do Corinthians como mandante e visitante nas partidas com resultado, no período de **28/01 a 09/09/2026**. O PBIX final contém as páginas AC1 e AC2 e abre na página AC2, com todas as competições e o período completo selecionados.
 
 A página reúne blocos de indicadores por mando, gráficos de resultados e de médias de gols, tabela-resumo e uma conclusão dinâmica que acompanha as segmentações de competição e período. A leitura compara taxas de vitórias, diferença em pontos percentuais, resultados predominantes e médias de gols marcados e sofridos; trata empates entre frequências e períodos sem partidas. Contagens sem ocorrências aparecem como zero.
