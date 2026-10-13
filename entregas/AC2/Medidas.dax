@@ -1,0 +1,120 @@
+// Medidas reais exportadas do modelo Partidas. Pasta de exibição: AC2.
+
+AC2 Jogos =
+COALESCE(CALCULATE(COUNTROWS(Partidas), KEEPFILTERS(Partidas[status] = "Com resultado")), 0)
+
+AC2 Vitórias =
+COALESCE(CALCULATE([AC2 Jogos], KEEPFILTERS(Partidas[resultado] = "Vitória")), 0)
+
+AC2 Empates =
+COALESCE(CALCULATE([AC2 Jogos], KEEPFILTERS(Partidas[resultado] = "Empate")), 0)
+
+AC2 Derrotas =
+COALESCE(CALCULATE([AC2 Jogos], KEEPFILTERS(Partidas[resultado] = "Derrota")), 0)
+
+AC2 Gols Pró =
+COALESCE(CALCULATE(SUM(Partidas[gols_pro]), KEEPFILTERS(Partidas[status] = "Com resultado")), 0)
+
+AC2 Gols Contra =
+COALESCE(CALCULATE(SUM(Partidas[gols_contra]), KEEPFILTERS(Partidas[status] = "Com resultado")), 0)
+
+AC2 Saldo de Gols =
+[AC2 Gols Pró] - [AC2 Gols Contra]
+
+AC2 Taxa de Vitórias =
+COALESCE(DIVIDE([AC2 Vitórias], [AC2 Jogos]), 0)
+
+AC2 Pontos =
+3 * [AC2 Vitórias] + [AC2 Empates]
+
+AC2 Aproveitamento =
+COALESCE(DIVIDE([AC2 Pontos], 3 * [AC2 Jogos]), 0)
+
+AC2 Média Gols Pró =
+COALESCE(DIVIDE([AC2 Gols Pró], [AC2 Jogos]), 0)
+
+AC2 Média Gols Contra =
+COALESCE(DIVIDE([AC2 Gols Contra], [AC2 Jogos]), 0)
+
+AC2 Conclusão =
+VAR PorMando =
+    ADDCOLUMNS(
+        DATATABLE("MandoAC2", STRING, {{"Mandante"}, {"Visitante"}}),
+        "J", VAR M = [MandoAC2] RETURN CALCULATE([AC2 Jogos], KEEPFILTERS(Partidas[mando] = M)),
+        "V", VAR M = [MandoAC2] RETURN CALCULATE([AC2 Vitórias], KEEPFILTERS(Partidas[mando] = M)),
+        "E", VAR M = [MandoAC2] RETURN CALCULATE([AC2 Empates], KEEPFILTERS(Partidas[mando] = M)),
+        "D", VAR M = [MandoAC2] RETURN CALCULATE([AC2 Derrotas], KEEPFILTERS(Partidas[mando] = M)),
+        "Taxa", VAR M = [MandoAC2] RETURN CALCULATE([AC2 Taxa de Vitórias], KEEPFILTERS(Partidas[mando] = M)),
+        "GP", VAR M = [MandoAC2] RETURN CALCULATE([AC2 Média Gols Pró], KEEPFILTERS(Partidas[mando] = M)),
+        "GC", VAR M = [MandoAC2] RETURN CALCULATE([AC2 Média Gols Contra], KEEPFILTERS(Partidas[mando] = M))
+    )
+VAR JM = MAXX(FILTER(PorMando, [MandoAC2] = "Mandante"), [J])
+VAR JV = MAXX(FILTER(PorMando, [MandoAC2] = "Visitante"), [J])
+VAR TM = MAXX(FILTER(PorMando, [MandoAC2] = "Mandante"), [Taxa])
+VAR TV = MAXX(FILTER(PorMando, [MandoAC2] = "Visitante"), [Taxa])
+VAR Diferenca = ABS(TM - TV) * 100
+VAR Comparacao =
+    IF(
+        JM = 0 || JV = 0,
+        "Comparação de taxas indisponível: não há partidas como "
+            & IF(JM = 0, "mandante", "visitante") & " neste recorte.",
+        "Taxa de vitórias: mandante " & FORMAT(TM, "0.0%", "pt-BR")
+            & "; visitante " & FORMAT(TV, "0.0%", "pt-BR") & ". "
+            & IF(
+                ABS(TM - TV) < 0.000000001,
+                "Taxas iguais; diferença de 0,0 ponto percentual.",
+                "Vantagem como " & IF(TM > TV, "mandante", "visitante")
+                    & ": " & FORMAT(Diferenca, "0.0", "pt-BR")
+                    & " pontos percentuais."
+            )
+    )
+VAR Frequencias =
+    CONCATENATEX(
+        PorMando,
+        VAR J = [J]
+        VAR V = [V]
+        VAR E = [E]
+        VAR D = [D]
+        VAR Maior = MAX(V, MAX(E, D))
+        VAR Resultados =
+            UNION(
+                ROW("ResultadoAC2", "vitórias", "N", V, "Ordem", 1),
+                ROW("ResultadoAC2", "empates", "N", E, "Ordem", 2),
+                ROW("ResultadoAC2", "derrotas", "N", D, "Ordem", 3)
+            )
+        VAR Lideres = FILTER(Resultados, [N] = Maior)
+        VAR Nomes = CONCATENATEX(Lideres, [ResultadoAC2], " e ", [Ordem], ASC)
+        RETURN
+            [MandoAC2] & ": "
+                & IF(
+                    J = 0,
+                    "sem partidas com resultado.",
+                    FORMAT(J, "0") & " jogo(s); "
+                        & IF(
+                            COUNTROWS(Lideres) > 1,
+                            Nomes & " empatam na maior frequência ("
+                                & FORMAT(Maior, "0") & " cada).",
+                            Nomes & " predominam (" & FORMAT(Maior, "0") & ")."
+                        )
+                ),
+        UNICHAR(10), [MandoAC2], ASC
+    )
+VAR Medias =
+    "Médias por jogo: "
+        & CONCATENATEX(
+            PorMando,
+            LOWER([MandoAC2]) & " — "
+                & IF(
+                    [J] = 0,
+                    "sem jogos para calcular médias",
+                    FORMAT([GP], "0.00", "pt-BR") & " gols marcados; "
+                        & FORMAT([GC], "0.00", "pt-BR") & " sofridos"
+                ),
+            " | ", [MandoAC2], ASC
+        ) & "."
+RETURN
+    IF(
+        JM + JV = 0,
+        "Não há partidas com resultado no período e nos filtros selecionados.",
+        Comparacao & UNICHAR(10) & Frequencias & UNICHAR(10) & Medias
+    )
