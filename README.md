@@ -58,6 +58,20 @@ No recorte completo, a taxa de vitórias é maior como mandante em **20,9 pontos
 
 As 13 medidas atuais, incluindo `AC2 Conclusão`, estão em `entregas/AC2/Medidas.dax`, exportadas do modelo. A AC1 e sua consulta foram preservadas.
 
+## AC3 — Evolução mensal por competição
+
+A AC3 compara o aproveitamento mensal do Corinthians na Série A e na Libertadores entre **28/01 e 09/09/2026**. Selecione a competição e o período para acompanhar os indicadores e a conclusão. Os dois gráficos usam a mesma escala de 0% a 100%. A tabela detalha os resultados e os gols de cada mês por competição.
+
+| Competição | Jogos | Vitórias | Empates | Derrotas | Gols pró–contra | Pontos comparativos | Aproveitamento |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Série A | 26 | 8 | 8 | 10 | 27–27 | 32 | 41,0% |
+| Libertadores | 9 | 4 | 4 | 1 | 10–5 | 16 | 59,3% |
+| Total | 35 | 12 | 12 | 11 | 37–32 | 48 | 45,7% |
+
+O aproveitamento divide os pontos do recorte (três por vitória e um por empate) pelo máximo possível de três por jogo. Isso permite comparar as competições, inclusive partidas de mata-mata. Nos 35 jogos, a taxa de vitórias foi de 34,3% e o saldo foi de +5.
+
+Janeiro e setembro têm cobertura parcial. Em janeiro, a derrota por 2 a 1 para o Bahia pela Série A resultou em 0% de aproveitamento. Em junho, a base registra zero partidas nas duas competições e o aproveitamento fica em branco. Considerando ambas as competições, fevereiro teve o maior aproveitamento, com 77,8% em três jogos.
+
 ## Dados
 
 Fonte: [FBref — Corinthians 2026](https://fbref.com/en/squads/bf4acd28/2026/all_comps/Corinthians-Stats-All-Competitions).
@@ -71,6 +85,8 @@ O arquivo original está em `dados/originais/` e a base tratada usada na anális
 Para consultar o painel pronto, abra `entregas/AC1/Corinthians_AC1_ENTREGA.pbix` no Power BI Desktop.
 
 Para consultar a entrega da AC2, abra **`entregas/AC2/Corinthians_AC2_ENTREGA.pbix`** no Power BI Desktop. Os dados já estão importados; não é necessário atualizar para visualizar as páginas.
+
+Para consultar a AC3, abra o arquivo [Corinthians_AC3_ENTREGA.pbix](entregas/AC3/Corinthians_AC3_ENTREGA.pbix) no Power BI Desktop e selecione **AC3 | Evolução mensal por competição**. As três páginas usam os dados já importados.
 
 O projeto editável está em `entregas/AC1/projeto-editavel/Corinthians_AC1_ENTREGA.pbip`. A consulta foi criada com o caminho local do computador em que o trabalho foi desenvolvido. Em outro computador, abra **Transformar dados > Configurações da fonte de dados**, selecione a origem do CSV e aponte para `dados/tratados/partidas_corinthians_2026.csv` desta cópia do repositório. Depois, aplique as alterações e atualize o modelo.
 
@@ -90,9 +106,13 @@ entregas/
 │   ├── Medidas.dax
 │   ├── Partidas.pq
 │   └── projeto-editavel/
-└── AC2/
-    ├── Corinthians_AC2_ENTREGA.pbix
-    └── Medidas.dax
+├── AC2/
+│   ├── Corinthians_AC2_ENTREGA.pbix
+│   └── Medidas.dax
+└── AC3/
+    ├── Corinthians_AC3_ENTREGA.pbix
+    ├── Medidas.dax
+    └── Calendario.dax
 ```
 
 O arquivo `entregas/AC2/Corinthians_AC2_DESENVOLVIMENTO.pbix` permanece local e está excluído do versionamento pelo `.gitignore`.
@@ -101,9 +121,9 @@ O arquivo `entregas/AC2/Corinthians_AC2_DESENVOLVIMENTO.pbix` permanece local e 
 
 Board do projeto: [Planejamento das ACs](https://github.com/users/gabriel-felix29/projects/2).
 
-A marcação indica se a análise de cada etapa já foi implementada. AC1 e AC2 estão concluídas; AC3 e AC4 continuam como planejamento futuro.
+A marcação indica se a análise de cada etapa já foi implementada. AC1, AC2 e AC3 estão implementadas. A AC4 segue como planejamento futuro.
 
 - [x] [AC1 — Analisar resultados e saldo de gols do Corinthians](https://github.com/gabriel-felix29/analise-corinthians-powerbi/issues/1)
 - [x] [AC2 — Comparar desempenho como mandante e visitante](https://github.com/gabriel-felix29/analise-corinthians-powerbi/issues/2)
-- [ ] [AC3 — Analisar evolução mensal por competição](https://github.com/gabriel-felix29/analise-corinthians-powerbi/issues/3)
+- [x] [AC3 — Analisar evolução mensal por competição](https://github.com/gabriel-felix29/analise-corinthians-powerbi/issues/3)
 - [ ] [AC4 — Analisar posse de bola e consolidar o projeto](https://github.com/gabriel-felix29/analise-corinthians-powerbi/issues/4)
