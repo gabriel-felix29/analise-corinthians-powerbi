@@ -1,0 +1,10 @@
+AC3 Calendario =
+SELECTCOLUMNS(
+ CALENDAR(DATE(2026,1,1), DATE(2026,9,30)),
+ "Data", [Date], "Ano", YEAR([Date]),
+ "Número do Mês", MONTH([Date]),
+ "Início do Mês", DATE(YEAR([Date]),MONTH([Date]),1),
+ "Mês", FORMAT([Date],"mmmm","pt-BR"),
+ "Mês/Ano", FORMAT([Date],"mmm/yyyy","pt-BR"),
+ "Ordem Mês", YEAR([Date])*100+MONTH([Date])
+)

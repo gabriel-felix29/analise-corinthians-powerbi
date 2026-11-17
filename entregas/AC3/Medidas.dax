@@ -1,0 +1,64 @@
+AC3 Jogos = COALESCE(CALCULATE(COUNTROWS(Partidas), KEEPFILTERS(Partidas[status] = "Com resultado"), KEEPFILTERS(Partidas[data] >= DATE(2026,1,28)), KEEPFILTERS(Partidas[data] <= DATE(2026,9,9))), 0)
+
+AC3 Vitórias = CALCULATE([AC3 Jogos], KEEPFILTERS(Partidas[resultado] = "Vitória"))
+
+AC3 Empates = CALCULATE([AC3 Jogos], KEEPFILTERS(Partidas[resultado] = "Empate"))
+
+AC3 Derrotas = CALCULATE([AC3 Jogos], KEEPFILTERS(Partidas[resultado] = "Derrota"))
+
+AC3 Gols Pró = COALESCE(CALCULATE(SUM(Partidas[gols_pro]), KEEPFILTERS(Partidas[status] = "Com resultado"), KEEPFILTERS(Partidas[data] >= DATE(2026,1,28)), KEEPFILTERS(Partidas[data] <= DATE(2026,9,9))), 0)
+
+AC3 Gols Contra = COALESCE(CALCULATE(SUM(Partidas[gols_contra]), KEEPFILTERS(Partidas[status] = "Com resultado"), KEEPFILTERS(Partidas[data] >= DATE(2026,1,28)), KEEPFILTERS(Partidas[data] <= DATE(2026,9,9))), 0)
+
+AC3 Saldo de Gols = [AC3 Gols Pró] - [AC3 Gols Contra]
+
+AC3 Taxa de Vitórias = DIVIDE([AC3 Vitórias], [AC3 Jogos])
+
+AC3 Pontos = 3 * [AC3 Vitórias] + [AC3 Empates]
+
+AC3 Aproveitamento = DIVIDE([AC3 Pontos], 3 * [AC3 Jogos])
+
+AC3 Conclusão = 
+VAR Competicoes = FILTERS(Partidas[competicao])
+VAR Escopo =
+    IF(COUNTROWS(Competicoes) > 1,
+        "Competições reunidas (" & CONCATENATEX(Competicoes, Partidas[competicao], " + ", Partidas[competicao], ASC) & ")",
+        CONCATENATEX(Competicoes, Partidas[competicao], " + "))
+VAR Mensal = ADDCOLUMNS(
+    SUMMARIZE('AC3 Calendario', 'AC3 Calendario'[Ordem Mês], 'AC3 Calendario'[Mês/Ano]),
+    "@J", [AC3 Jogos], "@A", [AC3 Aproveitamento])
+VAR ComJogos = FILTER(Mensal, [@J] > 0)
+VAR SemJogos = FILTER(Mensal, [@J] = 0)
+VAR N = COUNTROWS(ComJogos)
+VAR Maior = MAXX(ComJogos, [@A])
+VAR Menor = MINX(ComJogos, [@A])
+VAR Melhores = FILTER(ComJogos, ABS([@A] - Maior) < 0.000000001)
+VAR Piores = FILTER(ComJogos, ABS([@A] - Menor) < 0.000000001)
+VAR TextoMelhores = CONCATENATEX(Melhores,
+    'AC3 Calendario'[Mês/Ano] & " (" & FORMAT([@J], "0") & "j)",
+    "; ", 'AC3 Calendario'[Ordem Mês], ASC)
+VAR TextoPiores = CONCATENATEX(Piores,
+    'AC3 Calendario'[Mês/Ano] & " (" & FORMAT([@J], "0") & "j)",
+    "; ", 'AC3 Calendario'[Ordem Mês], ASC)
+VAR TextoSem = "Sem partidas: " & IF(COUNTROWS(SemJogos) = 0, "nenhum mês do período.",
+    CONCATENATEX(SemJogos, 'AC3 Calendario'[Mês/Ano], "; ", 'AC3 Calendario'[Ordem Mês], ASC) & ".")
+VAR Corpo = SWITCH(TRUE(),
+    N = 0, "Sem partidas com resultado." & UNICHAR(10) & "Aproveitamento não se aplica.",
+    N = 1, "Único mês: " & TextoMelhores & " — " & FORMAT(Maior, "0.0%", "pt-BR") & "."
+        & UNICHAR(10) & "Não há outro mês com jogos para comparar." & UNICHAR(10) & TextoSem,
+    ABS(Maior - Menor) < 0.000000001,
+        "Aproveitamento igual: " & FORMAT(Maior, "0.0%", "pt-BR") & "."
+        & UNICHAR(10) & "Meses com jogos: " & TextoMelhores & "." & UNICHAR(10) & TextoSem,
+    "Melhor: " & TextoMelhores & " — " & FORMAT(Maior, "0.0%", "pt-BR") & "."
+        & UNICHAR(10) & "Pior: " & TextoPiores & " — " & FORMAT(Menor, "0.0%", "pt-BR") & "."
+        & UNICHAR(10) & TextoSem)
+RETURN Escopo & " | " & Corpo
+
+AC3 Meses sem partidas = 
+VAR Mensal = ADDCOLUMNS(
+ SUMMARIZE('AC3 Calendario', 'AC3 Calendario'[Ordem Mês], 'AC3 Calendario'[Mês/Ano]),
+ "@J", [AC3 Jogos])
+VAR Sem = FILTER(Mensal, [@J] = 0)
+RETURN IF([AC3 Jogos] = 0, "Sem partidas no período selecionado. Taxas não se aplicam.",
+ IF(COUNTROWS(Sem) > 0, "Sem partidas: " & CONCATENATEX(Sem, 'AC3 Calendario'[Mês/Ano], "; ", 'AC3 Calendario'[Ordem Mês], ASC) & ". Ausência de jogos não representa desempenho zero.",
+ "Todos os meses do período selecionado têm partidas com resultado."))
