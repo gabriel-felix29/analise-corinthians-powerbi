@@ -1,0 +1,3 @@
+AC4 Posse média = CALCULATE(AVERAGE(Partidas[posse_bola]), KEEPFILTERS(Partidas[status] = "Com resultado"))
+
+AC4 Jogos com posse = COALESCE(CALCULATE(COUNT(Partidas[posse_bola]), KEEPFILTERS(Partidas[status] = "Com resultado")), 0)
