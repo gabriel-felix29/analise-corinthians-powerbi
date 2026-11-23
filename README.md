@@ -60,6 +60,8 @@ As 13 medidas atuais, incluindo `AC2 Conclusão`, estão em `entregas/AC2/Medida
 
 ## AC3 — Evolução mensal por competição
 
+[Vídeo de apresentação da AC3](https://youtu.be/kIBbDeYFj70)
+
 A AC3 compara o aproveitamento mensal do Corinthians na Série A e na Libertadores entre **28/01 e 09/09/2026**. Selecione a competição e o período para acompanhar os indicadores e a conclusão. Os dois gráficos usam a mesma escala de 0% a 100%. A tabela detalha os resultados e os gols de cada mês por competição.
 
 | Competição | Jogos | Vitórias | Empates | Derrotas | Gols pró–contra | Pontos comparativos | Aproveitamento |
