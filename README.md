@@ -76,6 +76,8 @@ Janeiro e setembro têm cobertura parcial. Em janeiro, a derrota por 2 a 1 para 
 
 ## AC4 — Posse de bola por resultado
 
+[Vídeo de apresentação da AC4](https://youtu.be/8KrnApTx23w)
+
 A página compara a posse média do Corinthians em vitórias, empates e derrotas. Cada partida contribui uma vez para a média do seu resultado. Os filtros de competição e período também controlam a tabela de conferência por jogo.
 
 | Resultado | Jogos com posse | Posse média |
