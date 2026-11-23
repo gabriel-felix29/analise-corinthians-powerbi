@@ -74,6 +74,22 @@ O aproveitamento divide os pontos do recorte (três por vitória e um por empate
 
 Janeiro e setembro têm cobertura parcial. Em janeiro, a derrota por 2 a 1 para o Bahia pela Série A resultou em 0% de aproveitamento. Em junho, a base registra zero partidas nas duas competições e o aproveitamento fica em branco. Considerando ambas as competições, fevereiro teve o maior aproveitamento, com 77,8% em três jogos.
 
+## AC4 — Posse de bola por resultado
+
+A página compara a posse média do Corinthians em vitórias, empates e derrotas. Cada partida contribui uma vez para a média do seu resultado. Os filtros de competição e período também controlam a tabela de conferência por jogo.
+
+| Resultado | Jogos com posse | Posse média |
+| --- | ---: | ---: |
+| Vitória | 12 | 54,3% |
+| Empate | 12 | 51,1% |
+| Derrota | 11 | 62,1% |
+
+As 35 partidas com resultado entre 28/01 e 09/09/2026 têm posse registrada. A exportação do FBref em `dados/originais/sportsref_download.xls` traz a coluna **Poss** em pontos percentuais. No CSV tratado e no modelo, `posse_bola` é uma fração. Na derrota contra o Bahia em 28/01, o valor 59 da fonte corresponde a 0,59 no modelo e a 59% na tela. Valores ausentes ficam fora da média e da contagem de jogos com posse.
+
+A maior média ocorreu nas derrotas. Essa observação descreve o recorte e não estabelece uma relação causal. Ao filtrar **Libertadores**, as médias são 58% em quatro vitórias, 54% em quatro empates e 77% em uma derrota.
+
+Abra a página AC4 no [relatório da AC4](entregas/AC4/Corinthians_AC4_ENTREGA.pbix). Consulte as [medidas DAX](entregas/AC4/Medidas.dax), o [MER em PDF](entregas/AC4/MER.pdf) e a [fonte editável do diagrama](entregas/AC4/MER.html).
+
 ## Dados
 
 Fonte: [FBref — Corinthians 2026](https://fbref.com/en/squads/bf4acd28/2026/all_comps/Corinthians-Stats-All-Competitions).
@@ -111,10 +127,15 @@ entregas/
 ├── AC2/
 │   ├── Corinthians_AC2_ENTREGA.pbix
 │   └── Medidas.dax
-└── AC3/
-    ├── Corinthians_AC3_ENTREGA.pbix
+├── AC3/
+│   ├── Corinthians_AC3_ENTREGA.pbix
+│   ├── Medidas.dax
+│   └── Calendario.dax
+└── AC4/
+    ├── Corinthians_AC4_ENTREGA.pbix
     ├── Medidas.dax
-    └── Calendario.dax
+    ├── MER.pdf
+    └── MER.html
 ```
 
 O arquivo `entregas/AC2/Corinthians_AC2_DESENVOLVIMENTO.pbix` permanece local e está excluído do versionamento pelo `.gitignore`.
@@ -123,7 +144,7 @@ O arquivo `entregas/AC2/Corinthians_AC2_DESENVOLVIMENTO.pbix` permanece local e 
 
 Board do projeto: [Planejamento das ACs](https://github.com/users/gabriel-felix29/projects/2).
 
-A marcação indica se a análise de cada etapa já foi implementada. AC1, AC2 e AC3 estão implementadas. A AC4 segue como planejamento futuro.
+A marcação indica se a análise de cada etapa já foi implementada. AC1, AC2 e AC3 estão publicadas. A análise da AC4 está em revisão.
 
 - [x] [AC1 — Analisar resultados e saldo de gols do Corinthians](https://github.com/gabriel-felix29/analise-corinthians-powerbi/issues/1)
 - [x] [AC2 — Comparar desempenho como mandante e visitante](https://github.com/gabriel-felix29/analise-corinthians-powerbi/issues/2)
